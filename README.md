@@ -1,6 +1,5 @@
-# Hazırlayanlar: Rumeysa Yalcin, Segenay Selcen Kurt / b200109032, b200109002
-
-Konu:Diabetik retinopati hastalığının sınıflandırılması
+# Yapay Zeka ve Uygulamaları Dersi, Hazırlayanlar: Rumeysa Yalcin, Segenay Selcen Kurt / b200109032, b200109002
+# Konu:Diabetik retinopati hastalığının sınıflandırılması
 
  # Diyabetik Retinopati Hastalığı:
 Diyabetik retinopati, gelişmiş dünyanın çalışma çağındaki popülasyonunda önde gelen körlük nedenidir. 93 milyondan fazla insanı etkilediği tahmin edilmektedir.DR'nin saptanması, eğitimli bir klinisyenin retinanın dijital renkli fundus fotoğraflarını incelemesini ve değerlendirmesini gerektiren, zaman alıcı ve manuel bir süreçtir. İnsan okuyucular incelemelerini genellikle bir veya iki gün sonra gönderdiklerinde, geciken sonuçlar takip kaybına, yanlış iletişimlere ve gecikmiş tedaviye yol açar.
@@ -16,5 +15,5 @@ Hindistan'daki Aravind Göz Hastanesi, tıbbi taramanın yapılmasının zor old
 Hafif, orta, çoğalan, şiddetli, dr yok olmak üzere 5 sınıftan oluşmaktadır. 
 Veri setinde 361 test, eğitim 3229 veri bulunmaktadır. 
 
- # Yapay Zeka ve Uygulamaları 
+ 
 
