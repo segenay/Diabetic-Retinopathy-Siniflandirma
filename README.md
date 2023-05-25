@@ -1,4 +1,5 @@
-# Yapay Zeka ve Uygulamaları Dersi Konu:Diabetik retinopati hastalığının sınıflandırılması 
+# Yapay Zeka ve Uygulamaları Dersi 
+# Konu:Diabetik retinopati hastalığının sınıflandırılması 
 Hazırlayanlar: Rumeysa Yalcin, Segenay Selcen Kurt / b200109032, b200109002
 
  # Diyabetik Retinopati Hastalığı:
