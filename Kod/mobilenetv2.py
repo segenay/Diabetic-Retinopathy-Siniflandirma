@@ -4,6 +4,7 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras import Sequential
 from keras.layers import Dense,MaxPool2D,Conv2D,Flatten,Dropout
 from keras.utils import img_to_array
+from keras.callbacks import EarlyStopping
 import cv2
 import numpy as np
 import pandas as pd
@@ -11,7 +12,6 @@ import pandas as pd
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
-# Görüntüleri düzenleme işlemleri yapılır (eğitim için)
 train_datagen = ImageDataGenerator(
                                    rescale = 1./255,
                                    shear_range = 0.2,
@@ -19,7 +19,10 @@ train_datagen = ImageDataGenerator(
                                    horizontal_flip = True,
                                    )
 test_datagen = ImageDataGenerator(rescale = 1./255)
+# ImageDataGenerator => veriden en iyi sekilde yararlanmak icin, rastgele donusumle veriyi artcriyoruz
+# rescale => islemi kolaylastirmak icin 0-255 arasindaki degerleri 0-1 arasindaki degerler haline getirir.
 
+# verilerin islenmesi icin uygun hale getirilmesi
 training_set = train_datagen.flow_from_directory('data/train',
                                                  target_size = (224, 224),
                                                  batch_size = 32,
@@ -66,35 +69,32 @@ metrics: Eğitim aşamasında her epoch sonrasında sonuçları değerlendirmek 
 Kullanılan “accuracy”, modelin başarısını inceleyebilmek için kullanılan yaygın bir metriktir.
 '''
 
-history = model.fit(
-    training_set,
-    validation_data=test_set,
-    batch_size = 32,
-    epochs=10,
-    callbacks=[
-        tf.keras.callbacks.EarlyStopping(
-            monitor='val_loss',
-            patience=3,
-            restore_best_weights=True
-        )
-    ]
-)
+early_stop = EarlyStopping(monitor="val_loss", patience = 3,restore_best_weights=True)
+# izlenen metrik iyile�meyi durdurunca egitimi durdurulmali
+# monitor => izlenemesi gerek miktar
+# patience => egitimin durdurulacagi iyile�tirme olmayan epoch sayisi
 
-acc = history.history['accuracy']
-val_acc = history.history['val_accuracy']
+history = model.fit_generator(training_set,callbacks=[early_stop], validation_data=test_set,epochs=15)
+# fit_generator =>> gercek zamanli veri aktarimini saglar, bellege sigdirilmasi gereken cok b�y�k veri k�mesi oldugunda 
+# training_set => alinacak egitim verisi
+# test_set => dogrulama verileri, test verileri verildi
+# epoch => modelin egitilip duruma gore agirliklarin g�ncellendigi her adim
 
-loss = history.history['loss']
-val_loss = history.history['val_loss']
-
-epochs = range(len(acc))
-
-plt.plot(epochs, acc)
-plt.plot(epochs, val_acc)
-plt.title('Eğitim ve doğrulama başarısı')
+# grafik cizdirme
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('Egitim ve dogrulama basarisi')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='best')
 plt.show()
 
-plt.plot(epochs, loss)
-plt.plot(epochs, val_loss)
-plt.title('Eğitim ve doğrulama hatası')
+plt.plot(history.history['loss'])
+plt.plot( history.history['val_loss'])
+plt.title('Egitim ve dogrulama hatasi')
+plt.ylabel('loss')
+plt.xlabel('epoch')
 plt.show()
+
+
 
